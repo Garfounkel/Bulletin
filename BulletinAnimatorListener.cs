@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 
 // ReSharper disable CheckNamespace
-namespace BulletinModule
+namespace UnityBulletin
 {
     [RequireComponent(typeof(Animator))]
     public class BulletinAnimatorListener : MonoBehaviour

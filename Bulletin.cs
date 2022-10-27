@@ -8,7 +8,7 @@ using UnityEngine.Events;
 using UnitySharedFolder;
 
 // ReSharper disable CheckNamespace
-namespace BulletinModule
+namespace UnityBulletin
 {
     public static class Bulletin
     {

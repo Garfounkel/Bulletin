@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEditor;
 
 // ReSharper disable CheckNamespace
-namespace BulletinModule
+namespace UnityBulletin
 {
     internal static class EnsureBulletinDefineExists
     {

@@ -9,7 +9,7 @@ using UnityEngine;
 using UnitySharedFolder;
 
 // ReSharper disable CheckNamespace
-namespace BulletinModule
+namespace UnityBulletin
 {
     public class BulletinDashboard : EditorWindow
     {

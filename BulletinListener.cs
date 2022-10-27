@@ -5,7 +5,7 @@ using UnityEngine.Events;
 using UnitySharedFolder;
 
 // ReSharper disable CheckNamespace
-namespace BulletinModule
+namespace UnityBulletin
 {
     public class BulletinListener : MonoBehaviour
     {

@@ -1,5 +1,5 @@
 ﻿// ReSharper disable CheckNamespace
-namespace BulletinModule
+namespace UnityBulletin
 {
     public enum Issue
     {
