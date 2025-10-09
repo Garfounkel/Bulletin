@@ -132,6 +132,13 @@ Lists all GameObjects listening for each issue. Only logs gameobjects when an is
 - Use the search box to filter the issues.
 - Click on any GameObject to select it in the hierarchy.
 
+## Used by
+
+[![Pale Night](./img/palenight_keyart-small.png)](https://palenight.prettyfrenchgames.com)
+[![Cosmos Survivors](./img/CosmosSurvivors_keyart-small.png)](https://cosmos.prettyfrenchgames.com)
+
+
+
 ## License
 This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
 
