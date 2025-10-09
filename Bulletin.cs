@@ -5,13 +5,25 @@ using System.Collections.ObjectModel;
 using System.Text;
 using UnityEngine;
 using UnityEngine.Events;
-using UnitySharedFolder;
 
-// ReSharper disable CheckNamespace
+
+#pragma warning disable IDE0130
 namespace UnityBulletin
 {
+    /// <summary>
+    /// Bulletin main class.
+    ///
+    /// It allows you to publish issues and subscribe to them.
+    ///
+    /// It is a lightweight system that can be used to manage events in your game.
+    ///
+    /// Access it from anywhere with Bulletin.Publish(Issue.IssueName) and Bulletin.Subscribe(Issue.IssueName, Action).
+    /// </summary>
     public static class Bulletin
     {
+        /// <summary>
+        /// Whether to enable debug mode.
+        /// </summary>
         public static bool debug = false;
 
         private static Dictionary<Issue, ThreadSafeList<Action>> _issues;
@@ -20,6 +32,9 @@ namespace UnityBulletin
 
         static Bulletin() => Init();
 
+        /// <summary>
+        /// Initialize the Bulletin system when automatic domain reload is disabled.
+        /// </summary>
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
         public static void Init()
         {
@@ -27,6 +42,9 @@ namespace UnityBulletin
             _subscribeLogs = new Dictionary<Issue, ThreadSafeList<SubscribeLog>>();
         }
 
+        /// <summary>
+        /// Publish an issue.
+        /// </summary>
         public static void Publish(Issue issue)
         {
             if (_issues.TryGetValue(issue, out var actions))
@@ -37,7 +55,7 @@ namespace UnityBulletin
         }
 
         /// <summary> Subscribe an action to an issue. The action will be invoked whenever the issue is published. </summary>
-        /// <remarks> Prefer the UnityEvent overload as it also tracks useful debug infos contrary to this one. </remarks>
+        /// <remarks> Prefer the UnityEvent overload as it tracks additional debug infos. </remarks>
         public static void Subscribe(Issue issue, Action action)
         {
             if (_issues.TryGetValue(issue, out var actions))
@@ -48,7 +66,7 @@ namespace UnityBulletin
 
         /// <summary>
         /// Subscribe an action to an issue. The action will be invoked whenever the issue is published.
-        /// Also tracks useful debug infos.
+        /// Tracks additional debug infos like the caller game object and the list of listeners.
         /// </summary>
         /// <remarks> Prefer this overload over the default Subscribe(Issue, Action) which doesn't track debug infos.</remarks>
         public static void Subscribe(Issue issue, UnityEvent unityEvent, GameObject caller)
@@ -62,16 +80,22 @@ namespace UnityBulletin
             Subscribe(issue, unityEvent.Invoke);
         }
 
+        /// <summary>
+        /// Unsubscribe an action from an issue.
+        /// </summary>
         public static void Unsubscribe(Issue issue, Action action)
         {
             if (_issues.TryGetValue(issue, out var actions))
             {
                 if (!actions.Remove(action) && debug)
                     Debug.Log($"Action [{action.Target}    -    {action.Method}] not found " +
-                              $"for issue {issue.ToString()}. Failed to unsubscribe.");
+                              $"for issue {issue}. Failed to unsubscribe.");
             }
         }
 
+        /// <summary>
+        /// Inspect the subscribers for an issue.
+        /// </summary>
         public static ReadOnlyCollection<Action> InspectSubscribers(Issue issue)
         {
             if (_issues.TryGetValue(issue, out var actions))
@@ -79,6 +103,9 @@ namespace UnityBulletin
             return new List<Action>().AsReadOnly();
         }
 
+        /// <summary>
+        /// Inspect the listeners for an issue.
+        /// </summary>
         public static ReadOnlyCollection<SubscribeLog> InspectListeners(Issue issue)
         {
             if (_subscribeLogs.TryGetValue(issue, out var subLog))
@@ -86,6 +113,9 @@ namespace UnityBulletin
             return new List<SubscribeLog>().AsReadOnly();
         }
 
+        /// <summary>
+        /// Pretty print the subscribe logs.
+        /// </summary>
         public static string PrettyPrintSubscribeLogs()
         {
             if (_subscribeLogs.Count == 0) return "No subscribe logs recorded.";
@@ -112,6 +142,9 @@ namespace UnityBulletin
         }
     }
 
+    /// <summary>
+    /// Helper class to store the subscribe logs.
+    /// </summary>
     public class SubscribeLog
     {
         public GameObject gameObject;
@@ -126,18 +159,21 @@ namespace UnityBulletin
         }
     }
 
+    /// <summary>
+    /// Basic thread safe list implementation.
+    /// </summary>
     internal class ThreadSafeList<T> : IEnumerable<T>
     {
-        protected List<T> _internalList = new List<T>();
+        protected List<T> _internalList = new();
 
         public IEnumerator<T> GetEnumerator() => Clone().GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => Clone().GetEnumerator();
 
-        protected static object _lock = new object();
+        protected static object _lock = new();
 
         public List<T> Clone()
         {
-            List<T> newList = new List<T>();
+            List<T> newList = new();
 
             lock (_lock)
             {

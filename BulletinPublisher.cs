@@ -1,12 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using Sirenix.OdinInspector;
 using UnityEngine;
-using UnitySharedFolder;
 
-// ReSharper disable CheckNamespace
+#if ODIN_INSPECTOR
+using Sirenix.OdinInspector;
+#endif
+
+
+#pragma warning disable IDE0130
 namespace UnityBulletin
 {
+    /// <summary>
+    /// Used to publish Bulletin issues through the inspector, you can assign this in UnityEvents and target Publish() to publish the issue when the event is triggered.
+    /// </summary>
     public class BulletinPublisher : MonoBehaviour
     {
         [Serializable]
@@ -18,7 +24,12 @@ namespace UnityBulletin
 
         public List<TimedIssue> timedIssues;
 
+        #if ODIN_INSPECTOR
         [Button, HideInEditorMode]
+        #endif
+        /// <summary>
+        /// Publishes all issues at the corresponding timestamps.
+        /// </summary>
         public void Publish()
         {
             foreach (var timedIssue in timedIssues)

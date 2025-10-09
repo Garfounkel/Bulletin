@@ -6,11 +6,19 @@ using System.Linq;
 using UnityEditor;
 using UnityEditor.IMGUI.Controls;
 using UnityEngine;
-using UnitySharedFolder;
 
-// ReSharper disable CheckNamespace
+
+#pragma warning disable IDE0130
 namespace UnityBulletin
 {
+    /// <summary>
+    /// A dashboard for the Bulletin system.
+    ///
+    /// It can be useful to debug and manage issues.
+    /// It allows you to manually publish issues and trace listeners.
+    ///
+    /// You can access it through "Tools/Bulletin".
+    /// </summary>
     public class BulletinDashboard : EditorWindow
     {
         [MenuItem("Tools/Bulletin")]
