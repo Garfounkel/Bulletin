@@ -131,3 +131,10 @@ Lists all GameObjects listening for each issue. Only logs gameobjects when an is
 
 - Use the search box to filter the issues.
 - Click on any GameObject to select it in the hierarchy.
+
+## License
+This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
+
+This means you can use this library in your own projects, commercial or not, as long as you include a copy of the original license file in your project.
+
+Attribution is not required, but appreciated.
