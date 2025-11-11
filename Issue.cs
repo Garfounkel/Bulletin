@@ -11,8 +11,8 @@ namespace UnityBulletin
          */
 
         None,
+        UpdatedControlScheme,  // This one I use in all my projects, feel free to remove it.
         // PlayerJumped,
-        // UpdatedControlScheme,
         // ...
     }
 }
